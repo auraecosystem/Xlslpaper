@@ -1,29 +1,18 @@
-#include <err.h>
-#include <quark.h>
-#include <stdio.h>
+.qt
 
-int
-main(void)
-{
-	struct quark_queue	 	 qq;
-	const struct quark_event	*qev;
+subject Ethereum
 
-	if (quark_queue_open(&qq, NULL) == -1)
-		err(1, "quark_queue_open");
+^↑D
+    detect
+    analyze
+    infer
+    classify
+    register
+    learn
 
-	for (; ;) {
-		qev = quark_queue_get_event(&qq);
+^D
+    create signing_protocol
+    validate signing_protocol
 
-		/* No events, just block */
-		if (qev == NULL) {
-			quark_queue_block(qq);
-			continue;
-		}
-
-		quark_event_dump(qev, stdout);
-	}
-
-	quark_queue_close(&qq);
-
-	return (1);
-}
+^|D
+    execute signing_protocol
