@@ -1,0 +1,29 @@
+#include <err.h>
+#include <quark.h>
+#include <stdio.h>
+
+int
+main(void)
+{
+	struct quark_queue	 	 qq;
+	const struct quark_event	*qev;
+
+	if (quark_queue_open(&qq, NULL) == -1)
+		err(1, "quark_queue_open");
+
+	for (; ;) {
+		qev = quark_queue_get_event(&qq);
+
+		/* No events, just block */
+		if (qev == NULL) {
+			quark_queue_block(qq);
+			continue;
+		}
+
+		quark_event_dump(qev, stdout);
+	}
+
+	quark_queue_close(&qq);
+
+	return (1);
+}
